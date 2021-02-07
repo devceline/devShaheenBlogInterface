@@ -15,6 +15,7 @@ const AboutMe = () => {
         <>
             <Head>
                 <script src="https://kit.fontawesome.com/5b1b66895a.js" crossOrigin="anonymous"></script>
+                <title>About Dev Shaheen </title>
             </Head>
             <Container>
                 <Header />
