@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import BlogPost from "../components/BlogPost"
 import BlogsClient from "../blogApiClient";
 import {
@@ -27,15 +27,28 @@ const loadingSpinner = (
 const Home = () => {
     const [blogsJsx, setBlogsJsx] = useState<JSX.Element[]>([]);
     const [moreExists, setMoreExists] = useState(true);
+    const [pageNumber, setPageNumber] = useState(1);
 
     const router = useRouter();
 
+    const [tag, setTag] = useState<string | null>(router.query.tag as string);
 
-    const loadBlogs = (pageNumber: number) => {
+    useEffect(() => {
+        setTag(router.query.tag as string);
+        setPageNumber(0);
+    }, [router.query.tag])
 
-        const tag = router.query.tag? router.query.tag[0] : null;
+    useEffect(() => {
+        loadBlogs(pageNumber, tag);
+    }, [pageNumber, tag])
+
+
+
+
+    const loadBlogs = (pageNumber: number, tag: string) => {
 
         BlogsClient.getBlogs(pageNumber, tag ,(blogs) => {
+            console.log(blogs)
             if (blogs.length < 1) {
                 setMoreExists(false);
                 return;
@@ -53,6 +66,7 @@ const Home = () => {
                         tags: b.tags
                     }} />))
 
+
             setBlogsJsx(newBlogsJsx);
 
         })
@@ -60,11 +74,17 @@ const Home = () => {
 
     }
 
+    const handleScroll = (e: React.UIEvent<HTMLDivElement,UIEvent> ) => {
+        const target = e.target as HTMLDivElement;
+        const isAtEnd = target.scrollHeight - target.scrollTop === target.clientHeight;
+        if(isAtEnd) setPageNumber(pageNumber + 1);
+
+    }
+
     return (
         <>
             <Head>
                 <title>Dev Shaheen's Blog </title>
-                <script src="https://kit.fontawesome.com/5b1b66895a.js" crossOrigin="anonymous"></script>
             </Head>
             <Container className="p-0 w-100 mw-100">
                 <Row className="mx-0">
@@ -73,19 +93,12 @@ const Home = () => {
                             <Header />
 
                             <Row>
-                                <Container>
-                                    <InfiniteScroll
-                                        hasMore={moreExists}
-                                        pageStart={0}
-                                        loadMore={loadBlogs}
-                                        loader={loadingSpinner}>
-                                        {blogsJsx}
-                                    </InfiniteScroll>
+                                <Container onScroll={handleScroll}>
+                                    {blogsJsx}
                                 </Container>
                             </Row>
                         </Container>
                     </Col>
-                    {/* <Sidebar /> */}
                 </Row>
             </Container>
         </>

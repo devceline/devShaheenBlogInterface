@@ -21,22 +21,22 @@ const BlogPost = (props: Props) => {
     const contentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (contentRef.current != null) {
-            render(
-                <ReactMarkdown children={props.blog.contents} />,
-                    contentRef.current, () => {
-                    if(props.shortened && contentRef.current && contentRef.current.innerHTML.length > 500){
-                        contentRef.current!.innerHTML = 
-                            contentRef.current.innerHTML.substring(0, 500) + 
-                            `...<a href="/blogs/${props.blog._id}"> Read More </a>`
-                    }
-                }
-            );
+
+            const contents = 
+            props.shortened &&  props.blog.contents.length > 300?
+            props.blog.contents.substring(0, 300) +  "..." : props.blog.contents;
+
+
+            render(<>
+                <ReactMarkdown className={props.shortened? "text-muted" : ""} children={contents} />
+            </>, contentRef.current);
 
         }
     }, [contentRef,props.blog._id])
 
 
     return (
+        <Link href={`/blogs/${props.blog._id}`}>
         <Container className="shadow-lg my-3 p-3 px-2 rounded border bg-dracforeground">
             <Row>
                 <Col>
@@ -59,6 +59,8 @@ const BlogPost = (props: Props) => {
                 </Col>
             </Row>
         </Container>
+        
+        </Link>
     )
 
 }

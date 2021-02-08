@@ -16,6 +16,9 @@ const BlogPage = ({blog}: {blog: Blog}) => {
         <>
             <Head>
                 <title>{blog.title}</title>
+                <script src="https://kit.fontawesome.com/5b1b66895a.js" crossOrigin="anonymous"></script>
+                
+                your tolerance threshold 
             </Head>
             <Container>
                 <Header />
