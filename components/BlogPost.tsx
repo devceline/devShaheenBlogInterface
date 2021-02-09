@@ -14,6 +14,7 @@ interface Props {
     blog: Blog
     maxContentLength?: number
     shortened?: boolean
+    className?: string
 }
 
 const BlogPost = (props: Props) => {
@@ -36,8 +37,7 @@ const BlogPost = (props: Props) => {
 
 
     return (
-        <Link href={`/blogs/${props.blog._id}`}>
-        <Container className="shadow-lg my-3 p-3 px-2 rounded border bg-dracforeground">
+        <Container className={`shadow-lg  my-3 p-3 px-2 rounded bg-dracforeground ${props.className}`}>
             <Row>
                 <Col>
                     <Row>
@@ -60,7 +60,6 @@ const BlogPost = (props: Props) => {
             </Row>
         </Container>
         
-        </Link>
     )
 
 }

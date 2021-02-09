@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useRouter, withRouter } from "next/router";
 import Head from "next/head";
+import Link from "next/link"
 import {Blog} from "../../model"
 import BlogPost from "../../components/BlogPost";
 import BlogsClient from "../../blogApiClient"
@@ -9,8 +10,6 @@ import Header from "../../components/Header";
 
 
 const BlogPage = ({blog}: {blog: Blog}) => {
-
-    let {query: {blogid}}= useRouter() as any;
 
     return (
         <>
@@ -24,7 +23,9 @@ const BlogPage = ({blog}: {blog: Blog}) => {
                 <Header />
                 <Container>
                     <Row>
-                        {blog && <BlogPost blog={blog} />}
+                        <Link href={`/blogs/${blog._id}`}>
+                            {blog && <BlogPost blog={blog} />}
+                        </Link>
                     </Row>
                 </Container>
             </Container>

@@ -47,6 +47,23 @@ a {
   pointer-events: none;
 }
 
+.noscroll::-webkit-scrollbar {
+  display: none
+}
+
+.blog-post {
+  border: #f8f8f2 solid 2px !important;
+}
+
+.blog-post:hover {
+  border: #ff79c6 solid 2px !important;
+}
+
+.noscroll {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
