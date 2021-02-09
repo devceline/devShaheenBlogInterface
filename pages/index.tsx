@@ -11,7 +11,7 @@ import { useRouter, withRouter } from "next/router";
 import Head from "next/head";
 import Header from "../components/Header"
 import { Blog } from "../model";
-import { isatty } from "tty";
+import Link from "next/link"
 
 
 
@@ -83,6 +83,8 @@ const Home = () => {
                                 <Container>
                                     <div className="noscroll" onScroll={handleScroll} style={{ overflow: "scroll", height: "50em" }}>
                                         {blogs.map(b =>
+                                            <Link href={`/blogs/${b._id}`} passHref>
+                                                <a style={{textDecoration: "none"}}>
                                                 <BlogPost shortened={true} key={b._id}
                                                     className="blog-post"
                                                     maxContentLength={400}
@@ -94,7 +96,10 @@ const Home = () => {
                                                         modifiedOn: b.modifiedOn,
                                                         tags: b.tags
                                                     }} />
-                                            )}
+                                                </a>
+
+                                            </Link>
+                                        )}
                                         {isLoading ? loadingSpinner : null}
                                     </div>
                                 </Container>
