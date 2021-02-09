@@ -2,7 +2,7 @@ import axios from "axios";
 import {Blog} from "./model"
 
 const client = {
-    baseUrl: "https://devshaheen.com/api",
+    baseUrl: "/api",
     limit: 5,
     getBlogAsync: async function(id: string)  {
         const rq = await axios.get(`${this.baseUrl}/blogs/${id}`);;
